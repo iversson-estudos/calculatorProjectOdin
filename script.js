@@ -29,7 +29,33 @@ actionsButton.forEach(element => {
 
 
 
+function actionClicked(event){
+    if (event.target && event.target.matches('button'))
+    {
+        if(event.target.textContent=='C')
+        {
+            display.textContent='';
+        }
 
+        else if(event.target.textContent=='X')
+        {
+            if(display.textContent.includes('X'))
+            {
+                
+            }
+        }
+
+
+
+
+
+
+       else
+        {
+        display.textContent+=event.target.textContent;
+        }
+    }
+}
 
 
 
