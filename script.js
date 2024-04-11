@@ -5,6 +5,18 @@ let operator;
 
 
 
+const display = document.getElementById('display');
+const numbersButton = Array.from(document.getElementsByClassName('numberButton'));
+const actionsButton = Array.from(document.getElementsByClassName('actionButton'));
+
+
+numbersButton.forEach(element => {
+    element.addEventListener('click',numberClicked);
+});
+
+actionsButton.forEach(element => {
+    element.addEventListener('click',actionClicked);
+});
 
 
 
@@ -22,7 +34,12 @@ let operator;
 
 
 
-
+function numberClicked(event){
+if (event.target && event.target.matches('button'))
+{
+    display.textContent+=event.target.textContent;
+}
+}
 
 
 function operate(num1,operator,num2){
