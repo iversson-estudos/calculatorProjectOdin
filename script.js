@@ -1,21 +1,26 @@
-let firstNumber;
-let secondNumber;
-let operator;
+let currentOperation='';
 
-
-
-
+//BUTTONS
 const display = document.getElementById('display');
-const numbersButton = Array.from(document.getElementsByClassName('numberButton'));
-const actionsButton = Array.from(document.getElementsByClassName('actionButton'));
+const opButton = Array.from(document.getElementsByClassName('opButton'));
+const numberButton = Array.from(document.getElementsByClassName('numberButton'));
+const clearButton = document.getElementById('clearButton');
+const calcButton = document.getElementById('calcButton');
 
 
-numbersButton.forEach(element => {
+
+
+//EVENT LISTENERS FOR THE BUTTONS
+
+clearButton.addEventListener('click',clearDisplay);
+calcButton.addEventListener('click',calculate);
+
+numberButton.forEach(element => {
     element.addEventListener('click',numberClicked);
 });
 
-actionsButton.forEach(element => {
-    element.addEventListener('click',actionClicked);
+opButton.forEach(element => {
+    element.addEventListener('click',opClicked);
 });
 
 
@@ -25,49 +30,46 @@ actionsButton.forEach(element => {
 
 
 
+//TAKES WHATS ON DISPLAY AND CALCULATES WHEN EQUAL BUTTON PRESSED
+function calculate()
+{   
+    let splitDisplay = display.textContent.split(currentOperation);
+    let result = operate(splitDisplay[0],currentOperation,splitDisplay[1]);
+    display.textContent=result;
+    currentOperation='';
+}
 
+//CLEARS DISPLAY
+function clearDisplay(){
+    display.textContent='';
+    currentOperation='';
+}
 
-
-
-function actionClicked(event){
-    if (event.target && event.target.matches('button'))
+//OPERATIONS HANDLING
+function opClicked(event){
+    if(currentOperation =='')
     {
-        if(event.target.textContent=='C')
-        {
-            display.textContent='';
-        }
-
-        else if(event.target.textContent=='X')
-        {
-            if(display.textContent.includes('X'))
-            {
-                
-            }
-        }
-
-
-
-
-
-
-       else
-        {
+        currentOperation=event.target.textContent;
         display.textContent+=event.target.textContent;
-        }
+    }
+    else 
+    {
+        calculate();
+        display.textContent+=event.target.textContent;
     }
 }
 
 
-
-
-function numberClicked(event){
-if (event.target && event.target.matches('button'))
+//WRITES NUMBERS ON DISPLAY
+function numberClicked(event)
 {
-    display.textContent+=event.target.textContent;
-}
+    if (event.target && event.target.matches('button'))
+    {
+        display.textContent+=event.target.textContent;
+    }
 }
 
-
+//DOES MATH DEPENDIND ON OPERATOR
 function operate(num1,operator,num2){
 switch(operator){
     case '+':
@@ -76,19 +78,19 @@ switch(operator){
     case '-':
         return sub(num1,num2);
         break;
-    case '*':
+    case 'X':
         return mult(num1,num2);
         break;
     case '/':
         return div(num1,num2);
         break;
-    default: return 'Invalid Operator';
+    default: return clearDisplay();
     }
 }
 
 
 
-
+//MATH FUNCTIONS
 function add(num1,num2)
 {
 return Number(num1)+Number(num2);    
